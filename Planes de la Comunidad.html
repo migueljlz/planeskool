@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planes de la Comunidad · IA Influencer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#070605;
+    --bg2:#0e0b07;
+    --ink:#f6efe0;
+    --muted:#b6ab93;
+    --gold:#e9bd54;
+    --gold-lt:#f8e6ab;
+    --gold-dk:#c2932f;
+    --blue:#1f8fff;
+    --blue-dk:#0a63d6;
+    --blue-shadow:#063a86;
+    --line:rgba(233,189,84,.22);
+    --card:rgba(28,23,15,.55);
+    --gold-grad:linear-gradient(180deg,#fbe9b0 0%,#ecc25e 48%,#c79333 100%);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Poppins',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  /* ambient backdrop */
+  .bg-fx{position:fixed;inset:0;z-index:0;pointer-events:none}
+  .bg-fx .g1{position:absolute;top:-12%;left:50%;transform:translateX(-50%);width:120vw;height:70vh;
+    background:radial-gradient(ellipse at 50% 0%,rgba(233,189,84,.16),rgba(233,189,84,0) 60%)}
+  .bg-fx .g2{position:absolute;bottom:-20%;left:-10%;width:60vw;height:60vh;
+    background:radial-gradient(circle,rgba(233,189,84,.08),transparent 65%)}
+  .bg-fx .grain{position:absolute;inset:0;opacity:.04;
+    background-image:radial-gradient(rgba(255,255,255,.6) .5px,transparent .5px);background-size:3px 3px}
+  .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 26px}
+
+  /* typography */
+  h1,h2,h3,.fred{font-family:'Fredoka',sans-serif;letter-spacing:.2px}
+  .gold-text{
+    background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 18px rgba(240,200,90,.45)) drop-shadow(0 2px 0 rgba(0,0,0,.35));
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;font-family:'Fredoka',sans-serif;font-weight:600;
+    font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-lt);
+    border:1px solid var(--line);border-radius:100px;padding:9px 18px;white-space:nowrap;
+    background:rgba(233,189,84,.06);box-shadow:0 0 26px rgba(233,189,84,.12) inset;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+
+  /* blue 3D button (matches deck CTA) */
+  .btn3d{
+    --bh:7px;
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;letter-spacing:.4px;
+    color:#fff;text-decoration:none;cursor:pointer;border:none;
+    padding:16px 34px;border-radius:60px;
+    background:linear-gradient(180deg,#3aa0ff,var(--blue) 55%,var(--blue-dk));
+    box-shadow:
+      0 var(--bh) 0 var(--blue-shadow),
+      0 calc(var(--bh) + 9px) 22px rgba(10,80,180,.5),
+      inset 0 2px 0 rgba(255,255,255,.45);
+    outline:3px solid #05060a;outline-offset:0;
+    transition:transform .09s ease, box-shadow .09s ease;
+    text-shadow:0 1px 1px rgba(0,40,100,.5);
+  }
+  .btn3d:hover{transform:translateY(2px);--bh:5px}
+  .btn3d:active{transform:translateY(var(--bh));--bh:1px;box-shadow:0 1px 0 var(--blue-shadow),inset 0 2px 0 rgba(255,255,255,.4)}
+  .btn3d.gold{
+    background:linear-gradient(180deg,#fbe7a8,#eac25c 55%,#c8962f);color:#3a2a05;
+    box-shadow:0 var(--bh) 0 #8a6313,0 calc(var(--bh) + 9px) 22px rgba(200,150,40,.5),inset 0 2px 0 rgba(255,255,255,.6);
+    outline-color:#1c1407;text-shadow:none;
+  }
+
+  /* ===== HERO ===== */
+  header.hero{position:relative;padding:46px 0 70px;min-height:92vh;display:flex;align-items:center}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;width:100%}
+  .hero h1{font-size:clamp(42px,6.6vw,86px);font-weight:700;line-height:.96;margin:20px 0 0}
+  .hero .sub{font-size:clamp(16px,1.7vw,20px);color:var(--muted);max-width:33ch;margin:22px 0 0;line-height:1.55;font-weight:300}
+  .hero .sub b{color:var(--ink);font-weight:600}
+  .hero-cta{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:34px}
+  .price-peek{font-family:'Fredoka',sans-serif;color:var(--muted);font-size:14px;letter-spacing:.3px}
+  .price-peek b{color:var(--gold-lt);font-weight:600}
+
+  .hero-photo{position:relative;justify-self:center}
+  .hero-photo .frame{
+    position:relative;width:min(440px,80vw);aspect-ratio:820/1229;border-radius:26px;overflow:hidden;
+    border:1px solid rgba(233,189,84,.4);
+    box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 80px rgba(233,189,84,.18),inset 0 0 60px rgba(0,0,0,.5);
+  }
+  .hero-photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .hero-photo .frame::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 55%,rgba(7,6,5,.55) 100%),
+              radial-gradient(circle at 50% 120%,transparent,rgba(7,6,5,.4))}
+  .flare{position:absolute;width:130%;left:-15%;top:38%;opacity:.7;mix-blend-mode:screen;pointer-events:none}
+  .scroll-cue{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);color:var(--muted);
+    font-size:12px;letter-spacing:2px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .scroll-cue .m{width:22px;height:34px;border:2px solid var(--line);border-radius:14px;position:relative}
+  .scroll-cue .m::after{content:"";position:absolute;left:50%;top:7px;transform:translateX(-50%);width:3px;height:7px;border-radius:3px;background:var(--gold);animation:wheel 1.6s infinite}
+  @keyframes wheel{0%{opacity:0;transform:translate(-50%,0)}40%{opacity:1}100%{opacity:0;transform:translate(-50%,11px)}}
+
+  /* ===== PRICING ===== */
+  section{position:relative;padding:84px 0}
+  .sec-head{text-align:center;max-width:740px;margin:0 auto 54px}
+  .sec-head h2{font-size:clamp(32px,4.4vw,56px);font-weight:700;line-height:1.02;margin:16px 0 0}
+  .sec-head p{color:var(--muted);font-size:17px;margin:16px 0 0;line-height:1.55;font-weight:300}
+
+  .plans{display:grid;grid-template-columns:1fr 1.12fr;gap:26px;align-items:stretch}
+  .plan{
+    position:relative;border-radius:24px;padding:38px 34px 36px;
+    background:var(--card);border:1px solid var(--line);
+    backdrop-filter:blur(8px);
+    box-shadow:0 24px 60px rgba(0,0,0,.45);
+    display:flex;flex-direction:column;
+  }
+  .plan.vip{
+    border:1.5px solid rgba(233,189,84,.6);
+    background:linear-gradient(180deg,rgba(45,34,12,.7),rgba(20,16,9,.66));
+    box-shadow:0 30px 90px rgba(0,0,0,.6),0 0 70px rgba(233,189,84,.16),inset 0 1px 0 rgba(255,235,180,.18);
+  }
+  .ribbon{
+    position:absolute;top:-15px;left:50%;transform:translateX(-50%);
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:12.5px;letter-spacing:2.5px;text-transform:uppercase;
+    color:#3a2a05;padding:9px 22px;border-radius:100px;white-space:nowrap;
+    background:var(--gold-grad);box-shadow:0 8px 26px rgba(233,189,84,.4),inset 0 1px 0 rgba(255,255,255,.6);
+  }
+  .plan .ptag{font-family:'Fredoka',sans-serif;font-weight:600;letter-spacing:2px;text-transform:uppercase;font-size:13px;color:var(--muted)}
+  .plan.vip .ptag{color:var(--gold-lt)}
+  .price{display:flex;align-items:flex-end;gap:8px;margin:14px 0 4px}
+  .price .cur{font-family:'Fredoka',sans-serif;font-weight:500;font-size:26px;color:var(--ink);margin-bottom:10px}
+  .price .num{font-family:'Fredoka',sans-serif;font-weight:700;font-size:64px;line-height:.85;padding:0 4px}
+  .price .per{font-size:15px;color:var(--muted);margin-bottom:10px;margin-left:4px;font-weight:400}
+  .price-note{font-size:14px;color:var(--muted);min-height:21px;font-weight:300}
+  .price-note b{color:var(--gold-lt);font-weight:600}
+  .mundial-chip{display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:13.5px;letter-spacing:.4px;
+    color:#fbe5b4;background:rgba(181,21,26,.18);border:1px solid rgba(233,189,84,.45);
+    border-radius:100px;padding:8px 16px;white-space:nowrap;box-shadow:0 0 22px rgba(233,189,84,.16)}
+  .was-inline{font-family:'Fredoka',sans-serif;font-weight:600;font-size:30px;color:#8a7f68;
+    text-decoration:line-through;text-decoration-color:#b5151a;text-decoration-thickness:3px;margin-bottom:12px}
+
+  /* featured benefit (bot de chatting) */
+  ul.feats li.feature-star{
+    background:linear-gradient(180deg,rgba(233,189,84,.13),rgba(233,189,84,.05));
+    border:1px solid rgba(233,189,84,.4);border-radius:16px;padding:15px 16px;margin:4px 0;
+    box-shadow:0 0 30px rgba(233,189,84,.16),inset 0 1px 0 rgba(255,235,180,.15);
+  }
+  .feat-body{display:flex;flex-direction:column;gap:6px}
+  .feat-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:'Fredoka',sans-serif;
+    font-weight:600;font-size:16px;color:#fdebbb}
+  .tag-hot{font-family:'Fredoka',sans-serif;font-weight:600;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;
+    color:#1a0f00;background:var(--gold-grad);border-radius:100px;padding:4px 10px;white-space:nowrap;
+    box-shadow:0 0 16px rgba(233,189,84,.4)}
+  .feat-desc{font-size:14px;line-height:1.45;color:#cdc1a6;font-weight:300}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:24px 0 22px}
+
+  ul.feats{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:13px;flex:1}
+  ul.feats li{display:flex;gap:13px;align-items:flex-start;font-size:15.2px;line-height:1.4;color:#e7ddca;font-weight:300}
+  .chk{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;margin-top:1px;
+    background:radial-gradient(circle at 35% 30%,#fbe7a8,#d6a23c);box-shadow:0 0 0 1px rgba(233,189,84,.4),0 0 12px rgba(233,189,84,.3)}
+  .chk svg{width:12px;height:12px}
+  .feat-group-label{display:flex;align-items:center;gap:12px;margin:6px 0 2px;
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-lt)}
+  .feat-group-label::before,.feat-group-label::after{content:"";flex:1;height:1px;background:var(--line)}
+  ul.feats li.vipx{color:#fbe5b4;font-weight:500}
+  ul.feats li.vipx .chk{background:radial-gradient(circle at 35% 30%,#fff4d2,#eab94c);box-shadow:0 0 0 1px rgba(255,225,150,.6),0 0 16px rgba(233,189,84,.55)}
+  .plan .cta-row{margin-top:30px}
+  .plan .btn3d{width:100%}
+  .summary-pill{display:inline-flex;align-items:center;gap:9px;font-size:14px;color:#e7ddca;font-weight:400;
+    background:rgba(233,189,84,.08);border:1px solid var(--line);border-radius:100px;padding:9px 16px;margin-bottom:4px}
+  .summary-pill .chk{width:18px;height:18px}
+
+  /* ===== LIVE OFFER ===== */
+  .liveoffer{position:relative}
+  .live-card{
+    position:relative;border-radius:30px;overflow:hidden;
+    border:1.5px solid rgba(233,189,84,.55);
+    background:
+      radial-gradient(120% 140% at 0% 0%,rgba(233,189,84,.16),transparent 55%),
+      linear-gradient(180deg,rgba(30,22,9,.92),rgba(12,9,5,.94));
+    box-shadow:0 40px 110px rgba(0,0,0,.6),0 0 90px rgba(233,189,84,.18);
+    display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center;
+    padding:48px 50px;
+  }
+  .live-card::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(135deg,rgba(233,189,84,.05) 0 2px,transparent 2px 22px)}
+  .live-badge{position:relative;display:inline-flex;align-items:center;gap:9px;
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:13px;letter-spacing:2.5px;text-transform:uppercase;
+    color:#1a0f00;background:var(--gold-grad);border-radius:100px;padding:9px 18px;white-space:nowrap;
+    box-shadow:0 0 30px rgba(233,189,84,.45)}
+  .live-badge .pulse{width:9px;height:9px;border-radius:50%;background:#b5151a;box-shadow:0 0 0 0 rgba(220,40,40,.7);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(220,40,40,.7)}70%{box-shadow:0 0 0 11px rgba(220,40,40,0)}100%{box-shadow:0 0 0 0 rgba(220,40,40,0)}}
+  .live-card h2{font-size:clamp(30px,4vw,50px);font-weight:700;line-height:1;margin:18px 0 0;position:relative}
+  .live-card .desc{color:var(--muted);font-size:15.5px;margin:16px 0 0;line-height:1.5;font-weight:300;position:relative;max-width:42ch}
+  .live-price{position:relative;text-align:center}
+  .was{font-family:'Fredoka',sans-serif;font-size:30px;color:#8a7f68;text-decoration:line-through;text-decoration-color:#b5151a;text-decoration-thickness:3px}
+  .now{display:flex;align-items:flex-start;justify-content:center;gap:6px;margin-top:4px}
+  .now .cur{font-family:'Fredoka',sans-serif;font-weight:600;font-size:34px;margin-top:14px;color:var(--gold-lt)}
+  .now .num{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(86px,13vw,128px);line-height:.8}
+  .now .per{align-self:flex-end;color:var(--muted);font-size:18px;margin-bottom:18px;font-weight:400}
+  .save-chip{display:inline-block;margin-top:10px;font-family:'Fredoka',sans-serif;font-weight:600;letter-spacing:1px;
+    font-size:14px;color:#fbe5b4;background:rgba(181,21,26,.18);border:1px solid rgba(233,189,84,.4);border-radius:100px;padding:7px 16px;white-space:nowrap}
+  .live-card .btn3d{margin-top:22px;position:relative}
+
+  /* ===== FOOTER ===== */
+  footer{padding:70px 0 90px;text-align:center;position:relative}
+  .censura{display:inline-flex;align-items:center;gap:11px;color:var(--gold-lt);font-family:'Fredoka',sans-serif;
+    font-weight:500;font-size:15px;letter-spacing:.5px;border:1px solid var(--line);border-radius:100px;
+    padding:13px 24px;background:rgba(233,189,84,.06)}
+  .censura .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}
+  footer .fine{color:#6f6757;font-size:13px;margin-top:34px;font-weight:300}
+  footer .brand{font-family:'Fredoka',sans-serif;font-weight:600;letter-spacing:2px;color:var(--muted);font-size:14px;margin-top:8px;text-transform:uppercase}
+
+  /* reveal */
+  @media (prefers-reduced-motion:no-preference){
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+    .reveal.in{opacity:1;transform:none}
+  }
+
+  /* responsive */
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:36px;text-align:center}
+    .hero .sub{margin-left:auto;margin-right:auto}
+    .hero-cta{justify-content:center}
+    .hero-photo{order:-1}
+    .plans{grid-template-columns:1fr;gap:34px}
+    .plan.vip{order:-1}
+    .live-card{grid-template-columns:1fr;text-align:center;padding:40px 26px}
+    .live-card .desc{margin-left:auto;margin-right:auto}
+    .live-badge{margin:0 auto}
+  }
+  @media(max-width:520px){
+    .wrap{padding:0 18px}
+    .plan{padding:32px 24px 30px}
+    .live-card{padding:34px 20px}
+  }
+</style>
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#070605">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fbe9b0"/>
+        <stop offset="0.5" stop-color="#ecc25e"/>
+        <stop offset="1" stop-color="#c79333"/>
+      </linearGradient>
+    </defs>
+    <circle cx="600" cy="300" r="150" fill="none" stroke="url(#g)" stroke-width="10"/>
+    <path d="M540 300 l40 40 l80 -90" fill="none" stroke="url(#g)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="600" y="560" text-anchor="middle" fill="url(#g)" font-family="Fredoka, sans-serif" font-size="74" font-weight="700">PLANES</text>
+    <text x="600" y="650" text-anchor="middle" fill="#b6ab93" font-family="Fredoka, sans-serif" font-size="40" font-weight="500" letter-spacing="6">COMUNIDAD IA</text>
+  </svg>
+</template>
+<div class="bg-fx">
+  <div class="g1"></div>
+  <div class="g2"></div>
+  <div class="grain"></div>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="dot"></span>Comunidad IA Influencer</span>
+      <h1><span class="gold-text">Planes de la</span><br><span class="gold-text">Comunidad</span></h1>
+      <p class="sub">Elige cómo quieres crecer como creador con IA. Mentorías en vivo, herramientas de monetización y acceso a una <b>plataforma sin censura.</b></p>
+      <div class="hero-cta">
+        <a href="#planes" class="btn3d">Ver los planes</a>
+        <span class="price-peek">Desde <b>79$/mes</b> · Plan anual <b>199$</b> solo por el Mundial</span>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img class="flare" src="assets/flare.png" alt="">
+      <div class="frame">
+        <img src="assets/hero.png" alt="Creadoras de la comunidad IA Influencer">
+      </div>
+    </div>
+  </div>
+  <a href="#planes" class="scroll-cue"><span class="m"></span>Planes</a>
+</header>
+
+<!-- ===================== PRICING ===================== -->
+<section id="planes">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow"><span class="dot"></span>Membresía</span>
+      <h2 class="gold-text">Elige tu acceso</h2>
+      <p>Dos formas de entrar a la comunidad. Ambas incluyen mentorías en vivo, la app y plataforma sin censura. El plan VIP desbloquea sesiones privadas, WhatsApp y el bot de chatting que vende por ti.</p>
+    </div>
+
+    <div class="plans">
+      <!-- NORMAL -->
+      <div class="plan reveal">
+        <span class="ptag">Plan Normal</span>
+        <div class="price">
+          <span class="cur">$</span><span class="num gold-text">79</span><span class="per">/ mes</span>
+        </div>
+        <div class="price-note">Mensual · cancela cuando quieras</div>
+        <div class="divider"></div>
+        <ul class="feats">
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#3a2a05" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Acceso a los módulos</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#3a2a05" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>4 mentores enseñando en vivo durante la semana</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#3a2a05" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Acceso a herramientas de monetización</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#3a2a05" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Acceso a la comunidad y hacks de IA Influencer</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#3a2a05" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Contacto con Mike por chat de Skool para consultas</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#3a2a05" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Acceso a la IA Influencer App</li>
+          <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#3a2a05" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Acceso al GPT de chatting para que la IA piense por ti</li>
+        </ul>
+        <div class="cta-row"><a href="#" class="btn3d">Empezar por 79$</a></div>
+      </div>
+
+      <!-- VIP -->
+      <div class="plan vip reveal">
+        <span class="ribbon">★ Oferta Mundial · Por tiempo limitado</span>
+        <span class="ptag">Plan VIP · Anual</span>
+        <div class="price">
+          <span class="was-inline">399$</span>
+          <span class="cur">$</span><span class="num gold-text">199</span><span class="per">/ año</span>
+        </div>
+        <div class="price-note">Menos de <b>17$/mes</b> · <b>ahorras 749$</b> frente a pagar mes a mes</div>
+        <div class="mundial-chip">⚽ Precio especial solo el Mundial</div>
+        <div class="divider"></div>
+        <div class="summary-pill"><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#3a2a05" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Todo lo del Plan Normal incluido</div>
+        <div class="feat-group-label">Además, exclusivo VIP</div>
+        <ul class="feats">
+          <li class="vipx"><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#3a2a05" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Sesiones privadas de la comunidad VIP</li>
+          <li class="vipx"><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#3a2a05" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Acceso a la comunidad VIP vía WhatsApp</li>
+          <li class="vipx"><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#3a2a05" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Mayor cantidad de créditos en la IA Influencer App</li>
+          <li class="vipx feature-star"><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#3a2a05" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="feat-body"><span class="feat-title">Bot de chatting automático<span class="tag-hot">Destacado</span></span><span class="feat-desc">Conversa y vende por ti 24/7: responde a tus fans, mantiene la conversación y cierra ventas en automático mientras tú creas contenido.</span></span></li>
+          <li class="vipx"><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#3a2a05" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Feedback directo de los mentores y mayor seguimiento</li>
+        </ul>
+        <div class="cta-row"><a href="#" class="btn3d gold">Hacerme VIP · 199$/año</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <span class="censura"><span class="dot"></span>En todos los planes accedes a nuestra plataforma sin censura</span>
+    <div class="fine">Los precios se muestran en USD. El plan anual VIP a 199$ es una oferta especial válida únicamente durante la transmisión del live del Mundial.</div>
+    <div class="brand">IA Influencer · Comunidad</div>
+  </div>
+</footer>
+
+<script>
+  // scroll reveal
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.16});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
